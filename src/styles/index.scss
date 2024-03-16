@@ -1,0 +1,49 @@
+@import 'vars';
+@import 'globals';
+@import 'buttons';
+@import 'breakpoints';
+@import 'typography';
+
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+
+  a:hover {
+    color: #747bff;
+  }
+
+  button {
+    background-color: #f9f9f9;
+  }
+}
+
+form {
+  display: flex;
+  flex-flow: column;
+}
+
+.card__wrap {
+  display: flex;
+  gap: 16px;
+  overflow: auto;
+  margin-inline: -24px;
+  padding: 24px 0 24px 24px;
+  width: auto;
+
+  @include small {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(192px, 1fr));
+    gap: 32px;
+    padding: 0;
+    margin-inline: 0;
+    overflow: visible;
+  }
+}
+
+.category {
+  margin-bottom: 4em;
+}

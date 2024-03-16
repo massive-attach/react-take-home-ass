@@ -1,0 +1,39 @@
+.content {
+  gap: 1.5em;
+  display: grid;
+}
+
+.modal {
+  border: none;
+  border-radius: 12px;
+  position: relative;
+  min-width: 280px;
+  transition: all .3s;
+
+  &::backdrop {
+    background: #3338;
+  }
+}
+
+.close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 16px;
+  background: none;
+  border: none;
+  outline: none;
+  font-size: 24px;
+  line-height: 0.5;
+  transition: all .3s;
+  border-radius: 8px;
+  margin: 4px;
+
+  &:hover {
+    background: #6495ed66;
+  }
+}
+
+.heading {
+  margin-bottom: 2em;
+}

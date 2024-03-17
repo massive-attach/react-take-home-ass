@@ -15,4 +15,7 @@ export default defineConfig({
     environment: "jsdom",
     setupFiles: "./tests.setup.js",
   },
+  preview: {
+    port: 8080,
+  },
 });

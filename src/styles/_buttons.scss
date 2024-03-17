@@ -24,9 +24,14 @@
     border: none;
 
     &:hover {
-      background: vars(--green-b);
+      background: var(--green-b);
       border: none;
       color: #fff;
+    }
+
+    &[disabled] {
+      opacity: 0.5;
+      cursor: not-allowed;
     }
   }
 }

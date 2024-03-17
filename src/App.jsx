@@ -43,6 +43,8 @@ function App() {
   // useFetch here
   useFetch("/ballot", setData);
 
+  const submitDisabled = Object.keys(payload).length < data.length;
+
   return (
     <>
       <h1>Awards 2021</h1>
@@ -65,7 +67,12 @@ function App() {
         </div>
       ))}
 
-      <button onClick={handleSubmit} className="btn submit">
+      <button
+        onClick={handleSubmit}
+        className="btn submit"
+        disabled={submitDisabled}
+        title={submitDisabled ? "Please pick a nominee in each category" : ""}
+      >
         submit
       </button>
 

@@ -1,6 +1,5 @@
 import { useState } from "react";
 
-import "./App.css";
 import Card from "./components/Card";
 import Modal from "./components/Modal";
 import { useFetch } from "./hooks/useFetch";
@@ -53,7 +52,8 @@ function App() {
             <h2 className="category__title" data-testid="cat-title">
               {category.catName}
             </h2>
-            <div className="card__wrap">
+
+            <div className="card-grid">
               {category.nominees.map((nominee, i) => {
                 const isSelected =
                   category.catName in payload &&

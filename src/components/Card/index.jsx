@@ -23,17 +23,11 @@ export default function Card({ nominee, isSelected }) {
       </div>
 
       {/* // select button which is actually a radio -- we only want to select one per category */}
-      <label className={styles.btn} data-testid="pick-btn">
+      <label className={styles.btn}>
         <span className={styles.radio} />
         <span>Pick</span>
 
-        <input
-          hidden={true}
-          type="radio"
-          name="nominee"
-          value={name}
-          role="radio"
-        />
+        <input hidden={true} type="radio" name="nominee" value={name} />
       </label>
     </div>
   );

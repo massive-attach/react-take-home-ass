@@ -1,18 +1,23 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 
 import Card from "./components/Card";
 import Modal from "./components/Modal";
 import { useFetch } from "./hooks/useFetch";
+import { slugify } from "./utils";
 
 function App() {
-  function handleFormChange(e, i) {
-    const catName = data[i].catName;
-    const nomineeName = e.target.value;
-    setPayload({ ...payload, ...{ [catName]: nomineeName } });
-    // console.log("change", payload);
-  }
-
+  const [data, setData] = useState([]);
   const [payload, setPayload] = useState({});
+
+  const handleFormChange = useCallback(
+    (e, i) => {
+      const catName = data[i].catName;
+      const nomineeName = e.target.value;
+      setPayload((prevPayload) => ({ ...prevPayload, [catName]: nomineeName }));
+    },
+    [data]
+  );
+
   const [isOpen, setIsOpen] = useState(false);
 
   function close() {
@@ -38,8 +43,6 @@ function App() {
     setIsOpen(true);
   }
 
-  const [data, setData] = useState([]);
-
   // useFetch here
   useFetch("/ballot", setData);
 
@@ -49,18 +52,23 @@ function App() {
     <>
       <h1>Awards 2021</h1>
       {data.map((category, i) => (
-        <div key={i} className="category">
+        <div key={slugify(category.catName)} className="category">
           <form onChange={(e) => handleFormChange(e, i)}>
             <h2 className="category__title" data-testid="cat-title">
               {category.catName}
             </h2>
 
             <div className="card-grid">
-              {category.nominees.map((nominee, i) => {
+              {category.nominees.map((nominee) => {
                 const isSelected =
                   category.catName in payload &&
                   payload[category.catName] === nominee.name;
-                return <Card {...{ nominee, isSelected }} key={i} />;
+                return (
+                  <Card
+                    {...{ nominee, isSelected }}
+                    key={slugify(nominee.name)}
+                  />
+                );
               })}
             </div>
           </form>

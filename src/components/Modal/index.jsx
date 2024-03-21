@@ -4,18 +4,23 @@ import styles from "./Modal.module.scss";
 
 Modal.propTypes = {
   isOpen: PropTypes.bool,
-  close: PropTypes.func,
+  close: PropTypes.func.isRequired,
   payload: PropTypes.object,
 };
+//default props
+Modal.defaultProps = {
+  isOpen: false,
+  payload: {},
+};
 
-export default function Modal({ isOpen = false, payload = {}, close }) {
+export default function Modal({ isOpen, payload, close }) {
   const modal = useRef();
 
   useEffect(() => {
     if (isOpen) {
-      modal.current.showModal();
+      modal.current?.showModal();
     } else {
-      modal.current.close();
+      modal.current?.close();
     }
   }, [isOpen]);
 

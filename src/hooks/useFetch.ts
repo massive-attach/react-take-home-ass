@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-export function useFetch(url, setData) {
+export function useFetch(url: string, setData: (data: any) => void) {
   const apiBase = import.meta.env.VITE_API_URL;
   useEffect(() => {
     fetch(apiBase + url)

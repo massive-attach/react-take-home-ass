@@ -1,20 +1,19 @@
 import { useEffect, useRef } from "react";
-import PropTypes from "prop-types";
 import styles from "./Modal.module.scss";
 
-Modal.propTypes = {
-  isOpen: PropTypes.bool,
-  close: PropTypes.func.isRequired,
-  payload: PropTypes.object,
+type ModalProps = {
+  isOpen?: boolean;
+  close: () => void;
+  payload?: Record<string, string>;
 };
-//default props
+
 Modal.defaultProps = {
   isOpen: false,
   payload: {},
-};
+}
 
-export default function Modal({ isOpen, payload, close }) {
-  const modal = useRef();
+export default function Modal({ isOpen, payload, close}: ModalProps){
+  const modal = useRef<HTMLDialogElement>(null);
 
   useEffect(() => {
     if (isOpen) {
@@ -25,7 +24,7 @@ export default function Modal({ isOpen, payload, close }) {
   }, [isOpen]);
 
   return (
-    <dialog open className={styles.modal} ref={modal}>
+      <dialog open className={styles.modal} ref={modal}>
       <form method="dialog">
         <h2>Success</h2>
 
@@ -34,7 +33,7 @@ export default function Modal({ isOpen, payload, close }) {
         </button>
 
         <div className={styles.content}>
-          {Object.entries(payload)?.map(([key, value]) => (
+          {Object.entries(payload || {})?.map(([key, value]) => (
             <section key={key}>
               <p>{key}</p>
               <h3>{value as string}</h3>

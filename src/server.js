@@ -18,7 +18,10 @@ app.use(cors(corsOptions));
 const port = 6608;
 
 app.get("/ballot", (req, res) => {
-  res.send(getBallotData());
+  getBallotData()
+    .then((data) => {
+      res.send(data);
+    })
 });
 
 app.listen(port, () => {

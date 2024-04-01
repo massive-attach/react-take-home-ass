@@ -10,17 +10,25 @@ type Data = {
   nominees: { word: string; srcSet: string }[];
 }
 
+type StateShape = {
+  resData: Data[];
+  sources: {
+    [key: string]: string;
+  }
+}
+
+
 type Payload = {
   [key: string]: string;
 }
 
 function App() {
-  const [data, setData] = useState([]);
-  const [payload, setPayload] = useState({});
+  const [data, setData] = useState<StateShape>();
+  const [payload, setPayload] = useState<Payload>({});
 
   const handleFormChange = useCallback(
-    (e, i) => {
-      const catName = data[i].catName;
+    (e: React.FormEvent<HTMLFormElement>, i: number) => {
+      const catName = data?.resData[i].catName ?? 'x';
       const nomineeWord = (e.target as HTMLInputElement).value;
       setPayload((prevPayload) => ({ ...prevPayload, [catName]: nomineeWord }));
     },
@@ -33,7 +41,7 @@ function App() {
     setIsOpen(false);
   }
 
-  function handleSubmit(e) {
+  function handleSubmit(e: React.MouseEvent) {
     e.preventDefault();
 
     const keys = Object.keys(payload);
@@ -55,12 +63,13 @@ function App() {
   // useFetch here
   useFetch("/ballot", setData);
 
-  const submitDisabled = Object.keys(payload).length < data.length;
+  const submitDisabled = Object.keys(payload).length < (data?.resData.length || 0);
+
 
   return (
     <>
       <h1>Awards 2021</h1>
-      {data.map((category, i) => (
+      {data?.resData.map((category, i) => (
         <div key={slugify(category.catName)} className="category">
           <form onChange={(e) => handleFormChange(e, i)}>
             <h2 className="category__title" data-testid="cat-title">
@@ -68,14 +77,16 @@ function App() {
             </h2>
 
             <div className="card-grid">
-              {category.nominees.map((nominee) => {
+              {category.nominees?.map((nominee) => {
+                const { word } = nominee;
                 const isSelected =
                   category.catName in payload &&
-                  payload[category.catName] === nominee.word;
+                  payload[category.catName] === word;
                 return (
                   <Card
-                    {...{ nominee, isSelected }}
-                    key={nominee.word}
+                  key={word}
+                  src={data?.sources[word]}
+                  {...{ nominee, isSelected }}
                   />
                 );
               })}

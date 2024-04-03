@@ -1,6 +1,7 @@
 .content {
   gap: 1.5em;
   display: grid;
+  grid-template-columns: 1fr 1fr;
 }
 
 .modal {

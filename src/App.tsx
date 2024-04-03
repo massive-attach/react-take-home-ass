@@ -5,6 +5,15 @@ import Modal from "./components/Modal";
 import { useFetch } from "./hooks/useFetch";
 import { slugify } from "./utils";
 
+type Data = {
+  catName: string;
+  nominees: { word: string; srcSet: string }[];
+}
+
+type Payload = {
+  [key: string]: string;
+}
+
 function App() {
   const [data, setData] = useState([]);
   const [payload, setPayload] = useState({});
@@ -12,8 +21,8 @@ function App() {
   const handleFormChange = useCallback(
     (e, i) => {
       const catName = data[i].catName;
-      const nomineeName = e.target.value;
-      setPayload((prevPayload) => ({ ...prevPayload, [catName]: nomineeName }));
+      const nomineeWord = (e.target as HTMLInputElement).value;
+      setPayload((prevPayload) => ({ ...prevPayload, [catName]: nomineeWord }));
     },
     [data]
   );
@@ -62,11 +71,11 @@ function App() {
               {category.nominees.map((nominee) => {
                 const isSelected =
                   category.catName in payload &&
-                  payload[category.catName] === nominee.name;
+                  payload[category.catName] === nominee.word;
                 return (
                   <Card
                     {...{ nominee, isSelected }}
-                    key={slugify(nominee.name)}
+                    key={nominee.word}
                   />
                 );
               })}

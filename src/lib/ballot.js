@@ -1,9 +1,23 @@
 import { faker } from "@faker-js/faker";
 
 export function getBallotData() {
-  const categories = ["A category number one", "Some other category"];
+  const categories = ["adjective", "noun", /*"adverb"*/];
 
   const resData = [];
+
+  function coinFlip() {
+    return Math.random() < 0.5;
+  }
+
+  function getWord(cat) {
+    let catB = cat;
+
+    if (cat === "adjective") {
+      catB = coinFlip() ? "adjective" : "noun";        
+    }
+
+    return faker.word[catB]()    
+  }
 
   categories.forEach((cat) => {
     const length = 3 + Math.floor(Math.random() * 20);
@@ -14,8 +28,8 @@ export function getBallotData() {
         .fill(null)
         .map(() => {
           return {
-            name: faker.person.fullName(),
-            email: faker.internet.email(),
+            word: getWord(cat),
+            // email: faker.internet.email(),
             srcSet: faker.image.avatar(),
           };
         }),

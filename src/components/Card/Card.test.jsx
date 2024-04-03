@@ -13,10 +13,10 @@ describe("Card", () => {
 
   test("renders the nominee name and image", () => {
     //title
-    expect(screen.getByText(nominee.name)).toBeVisible();
+    expect(screen.getByText(nominee.word)).toBeVisible();
 
     // portrait
-    expect(screen.getByAltText(nominee.name)).toHaveAttribute(
+    expect(screen.getByAltText(nominee.word)).toHaveAttribute(
       "src",
       nominee.srcSet
     );
@@ -27,12 +27,12 @@ describe("Card", () => {
     // radio (hidden)
     const radio = screen.getByRole("radio", { hidden: true });
     expect(radio).toHaveAttribute("name", "nominee");
-    expect(radio).toHaveAttribute("value", nominee.name);
+    expect(radio).toHaveAttribute("value", nominee.word);
   });
 
   test("applies the isSelected style", () => {
     render(<Card nominee={nominee} isSelected={true} />);
-    expect(screen.getByText(nominee.name).closest("div")).toHaveClass(
+    expect(screen.getByText(nominee.word).closest("div")).toHaveClass(
       styles.isSelected
     );
   });

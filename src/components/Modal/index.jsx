@@ -36,8 +36,8 @@ export default function Modal({ isOpen, payload, close }) {
         <div className={styles.content}>
           {Object.entries(payload)?.map(([key, value]) => (
             <section key={key}>
-              <h3>{key}</h3>
-              <p>{value}</p>
+              <p>{key}</p>
+              <h3>{value as string}</h3>
             </section>
           ))}
         </div>

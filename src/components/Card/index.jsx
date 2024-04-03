@@ -11,15 +11,23 @@ Card.propTypes = {
   isSelected: PropTypes.bool,
 };
 
-export default function Card({ nominee, isSelected }) {
-  const { name, srcSet } = nominee;
+type CardProps = {
+  nominee: {
+    word: string;
+    srcSet: string;
+  };
+  isSelected: boolean;
+}
+
+export default function Card({ nominee, isSelected }: CardProps) {
+  const { word, srcSet } = nominee;
 
   return (
     <div className={cn(styles.card, { [styles.isSelected]: isSelected })}>
-      <h3>{name}</h3>
+      <h3>{word}</h3>
 
       <div className={styles.portraitWrap}>
-        <img src={srcSet} alt={name} className={styles.portrait} />
+        <img src={srcSet} alt={word} className={styles.portrait} />
       </div>
 
       {/* // select button which is actually a radio -- we only want to select one per category */}
@@ -27,7 +35,7 @@ export default function Card({ nominee, isSelected }) {
         <span className={styles.radio} />
         <span>Pick</span>
 
-        <input hidden={true} type="radio" name="nominee" value={name} />
+        <input hidden={true} type="radio" name="nominee" value={word} />
       </label>
     </div>
   );
